@@ -94,7 +94,7 @@ jobs:
       - run: docker pull ghcr.io/${{ github.repository }}:${{ github.sha }}
       - run: |
           docker run \
-            --rm --detach --publish 10000:10000 \
+            --rm --detach --publish 8080:8080 \
             --name $CONTAINER_NAME ghcr.io/${{ github.repository }}:${{ github.sha }}
       - run: sleep 3
       - run: |
@@ -108,9 +108,9 @@ jobs:
     container:
       image: ghcr.io/${{ github.repository }}:${{ github.sha }}
       ports:
-        - 10000:10000
+        - 8080:8080
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - run: curl http://localhost:10000/
+      - run: curl http://localhost:8080/
