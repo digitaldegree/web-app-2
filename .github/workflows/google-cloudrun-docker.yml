@@ -29,10 +29,7 @@
 
 name: 'Build and Deploy to Cloud Run'
 
-on:
-  push:
-    branches:
-      - '"main"'
+on: workflow_dispatch
 
 env:
   PROJECT_ID: learning-github-actions-2025
