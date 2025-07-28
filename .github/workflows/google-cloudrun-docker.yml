@@ -8,6 +8,7 @@ jobs:
 
     permissions:
       packages: read
+      id-token: write
 
     steps:
     - name: Authenticate to Google Cloud
