@@ -37,5 +37,12 @@ jobs:
     - run: docker tag ghcr.io/digitaldegree/web-app-2:9a3e70cedf34149498354c1baee552e4057f324f us-central1-docker.pkg.dev/${{secrets.GCP_PROJECT_ID}}/web-app-2/${{env.SERVICE_NAME}}:9a3e70cedf34149498354c1baee552e4057f324f
     - run: docker image ls
     - run: docker push us-central1-docker.pkg.dev/${{secrets.GCP_PROJECT_ID}}/web-app-2/${{env.SERVICE_NAME}}:9a3e70cedf34149498354c1baee552e4057f324f
+    - name: Deploy to Cloud Run
+      uses: 'google-github-actions/deploy-cloudrun@v2'
+      with:
+        service: ${{ env.SERVICE_NAME }}
+        region: us-central1
+        image: us-central1-docker.pkg.dev/${{secrets.GCP_PROJECT_ID}}/web-app-2/${{env.SERVICE_NAME}}:9a3e70cedf34149498354c1baee552e4057f324f
+        flags: '--allow-unauthenticated'
 
         
