@@ -155,5 +155,5 @@ jobs:
       with:
         service: ${{ env.SERVICE_NAME }}
         region: ${{ secrets.GCP_REGION }}
-        image: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{secrets.GCP_PROJECT_ID}}/${{ secrets.GCP_REGISTRY_NAME }}/$SERVICE_NAME:${{ github.sha }}
+        image: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{secrets.GCP_PROJECT_ID}}/${{ secrets.GCP_REGISTRY_NAME }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
         flags: '--allow-unauthenticated'
