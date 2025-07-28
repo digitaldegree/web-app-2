@@ -3,7 +3,7 @@ name: Pipeline
 on: [push, workflow_dispatch]
 
 env:
-  CONTAINER_NAME: mascot
+  SERVICE_NAME: mascot
 
 jobs:
   lint-and-test:
@@ -95,22 +95,24 @@ jobs:
       - run: |
           docker run \
             --rm --detach --publish 8080:8080 \
-            --name $CONTAINER_NAME ghcr.io/${{ github.repository }}:${{ github.sha }}
+            --name $SERVICE_NAME ghcr.io/${{ github.repository }}:${{ github.sha }}
       - run: sleep 3
       - run: |
-          docker exec $CONTAINER_NAME \
+          docker exec $SERVICE_NAME \
             python -m unittest --verbose --failfast 
-      - run: docker stop $CONTAINER_NAME
+      - run: docker stop $SERVICE_NAME
 
   deploy:
     needs: test-image
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/${{ github.repository }}:${{ github.sha }}
-      ports:
-        - 8080:8080
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+    
     steps:
-      - run: curl http://localhost:8080/
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Set up Cloud SDK
+        uses: 'google-github-actions/setup-gcloud@v1'
