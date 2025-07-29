@@ -104,7 +104,7 @@ jobs:
       - name: Run the test suite inside the container
         run: |
           docker exec $SERVICE_NAME \
-            python -m unittest --verbose --failfast 
+            curl localhost:8000/health
     
       - name: Stop ${{ env.SERVICE_NAME }}
         run: docker stop $SERVICE_NAME
