@@ -112,7 +112,7 @@ jobs:
 
     env:
       LOCAL_IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
-      GCP_IMAGE: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_REGISTRY_NAME }}/$SERVICE_NAME:${{ github.sha }}
+      GCP_IMAGE: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_REGISTRY_NAME }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
 
     steps:
     - name: Log into ghcr.io
