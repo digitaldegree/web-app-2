@@ -140,7 +140,7 @@ jobs:
 
     - name: Tag the image for GCP Container Registry
       run: |
-        docker tag ${{ env.LOCAL_IAMGE}} ${{ env.GCP_IMAGE }}
+        docker tag ${{ env.LOCAL_IMAGE}} ${{ env.GCP_IMAGE }}
         docker image ls
 
     - name: Push the tagged image to GCP Container Registry
